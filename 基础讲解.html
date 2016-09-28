@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas基础讲解</title>
+</head>
+<body>
+    <canvas id="canvas" width="1024" height="768" style="border: 1px solid #aaa;display: block;margin: 0 auto;">
+        当前浏览器不支持canvas，请更换浏览器后再试
+    </canvas>
+    <script>
+        window.onload = function() {
+            var canvas = document.getElementById("canvas");
+                canvas.width = 1024;
+                canvas.height = 768;
+//        使用context进行绘制
+
+//            判断浏览器是否支持canvas
+            if(canvas.getContext("2d")) {
+                var context = canvas.getContext(("2d"));
+            }else{
+                alert("当前浏览器不支持canvas,请更换浏览器后再试！");
+            }
+
+//            画一条线
+            context.beginPath();
+            context.moveTo(100, 100);
+            context.lineTo(700, 700);
+            context.lineTo(100, 700);
+            context.lineTo(100, 100);
+            context.closePath();
+
+            context.lineWidth = 5;
+
+            context.fillStyle = "rgb(1, 10, 30)";
+            context.fill();
+            context.strokeStyle = "#ff0";
+            context.stroke();
+
+//            第二部分
+            context.beginPath();
+            context.moveTo(300, 200);
+            context.lineTo(500, 300);
+            context.strokeStyle = "#df3";
+            context.stroke();
+
+        }
+
+    </script>
+</body>
+</html>
