@@ -5,14 +5,14 @@
     <title>canvas基础讲解</title>
 </head>
 <body>
-    <canvas id="canvas" width="1024" height="768" style="border: 1px solid #aaa;display: block;margin: 0 auto;">
+    <canvas id="canvas"  width="1024" height="2000" style="border: 1px solid #aaa;display: block;margin: 0 auto;">
         当前浏览器不支持canvas，请更换浏览器后再试
     </canvas>
     <script>
         window.onload = function() {
             var canvas = document.getElementById("canvas");
                 canvas.width = 1024;
-                canvas.height = 768;
+                // canvas.height = 768;
 //        使用context进行绘制
 
 //            判断浏览器是否支持canvas
@@ -23,26 +23,93 @@
             }
 
 //            画一条线
-            context.beginPath();
-            context.moveTo(100, 100);
-            context.lineTo(700, 700);
-            context.lineTo(100, 700);
-            context.lineTo(100, 100);
-            context.closePath();
+            (function drawLine() {
+                // 第一条
+                context.beginPath();
+                    context.moveTo(100, 100);
+                    context.lineTo(200, 200);
+                    context.lineTo(100, 200);
+                    context.lineTo(100, 100);
+                context.closePath();
 
-            context.lineWidth = 5;
+                context.lineWidth = 5;
+                context.fillStyle = "rgb(1, 10, 30)";
+                context.fill();
+                context.strokeStyle = "#df3";
+                context.stroke();
 
-            context.fillStyle = "rgb(1, 10, 30)";
-            context.fill();
-            context.strokeStyle = "#ff0";
-            context.stroke();
+                // 第二条
+                context.beginPath();
+                    context.moveTo(100, 230);
+                    context.lineTo(200, 300);
+                context.closePath();
 
-//            第二部分
-            context.beginPath();
-            context.moveTo(300, 200);
-            context.lineTo(500, 300);
-            context.strokeStyle = "#df3";
-            context.stroke();
+                context.strokeStyle = "#ffdd33";
+                context.stroke();
+            })();
+
+//          线条的lineCap属性
+            (function lineCap() {
+                context.lineWidth = 30;
+                context.strokeStyle = "#058";
+                                        
+                // 1.butt
+                context.beginPath();
+                    context.moveTo(300, 200);
+                    context.lineTo(700, 200);
+                    context.lineCap = "butt";
+                context.stroke();
+                                        
+                // 2.round
+                context.beginPath();
+                    context.moveTo(300, 400);
+                    context.lineTo(700, 400);
+                    context.lineCap = "round";
+                context.stroke();
+                                        
+                // 3.square
+                context.beginPath();
+                    context.moveTo(300, 600);
+                    context.lineTo(700, 600);
+                    context.lineCap = "square";
+                context.stroke();
+                                        
+                // 基线
+                context.lineWidth = 1;
+                context.strokeStyle = "#27a";
+                    context.moveTo(300, 100);
+                    context.lineTo(300, 700);
+                                        
+                    context.moveTo(700, 100);
+                    context.lineTo(700, 700);
+                context.stroke();
+            })();
+
+//          五角星
+//          //小圆半径r，大圆半径R，偏移位置x，y;rotate: 旋转角度
+            (function pentagram(r, R, x, y, rotate) {
+                context.beginPath();
+                    for(var i = 0 ; i < 5 ; i++) {
+
+                        context.lineTo( Math.cos( (18 + i * 72 - rotate) / 180 * Math.PI) * R + x, 
+                                        -Math.sin( (18 + i * 72 - rotate) / 180 * Math.PI) * R + y
+                        );
+                         context.lineTo( Math.cos( (54 + i * 72 - rotate) / 180 * Math.PI) * r + x, 
+                                        -Math.sin( (54 + i * 72 - rotate) / 180 * Math.PI) * r + y
+                        );
+                    }
+                context.closePath();
+                context.lineWidth = 10;
+                // lineJoin属性
+                // context.lineJoin = "round"; //bevel,mitter
+                // 
+                // miterLimit,在lineJoin属性值为mitter的时候才有效
+                context.miterLimit = 20;
+                context.stroke();
+            })(20, 150, 160, 400, 30);
+
+            
+            
 
         }
 

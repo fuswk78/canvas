@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>星空</title>
+</head>
+<body>
+	<canvas id="canvas"  width="1024" height="750" style="border: 1px solid #aaa;display: block;margin: 0 auto;">
+        当前浏览器不支持canvas，请更换浏览器后再试
+    </canvas>
+	<script>
+		var canvas = document.getElementById("canvas");
+            canvas.width = 1024;
+
+        if(canvas.getContext("2d")) {
+            var context = canvas.getContext(("2d"));
+        }else{
+            alert("当前浏览器不支持canvas,请更换浏览器后再试！");
+        }
+
+        context.fillStyle = "black";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        // 循环画出五角星
+        for(let i = 0; i < 200; i++) {
+        	var r = Math.random() * 10 + 10,		//10-20的随机数
+        		x = Math.random() * canvas.width,	//0-画布宽度
+        		y = Math.random() * canvas.height,	//0-画布高度
+        		a = Math.random() * 360;			//0-360度之间
+        	pentagram(r, r/2, x, y, a, "#fb3", "#fd5", "round");
+        }
+		// 大圆小圆，偏移，旋转，颜色，形状
+		function pentagram(R, r, x, y, rotate, fillColor, strokeColor, shape) {
+            context.beginPath();
+                for(var i = 0 ; i < 5 ; i++) {
+
+                    context.lineTo( Math.cos( (18 + i * 72 - rotate) / 180 * Math.PI) * R + x, 
+                                    -Math.sin( (18 + i * 72 - rotate) / 180 * Math.PI) * R + y
+                    );
+                     context.lineTo( Math.cos( (54 + i * 72 - rotate) / 180 * Math.PI) * r + x, 
+                                    -Math.sin( (54 + i * 72 - rotate) / 180 * Math.PI) * r + y
+                    );
+                }
+            context.closePath();
+
+            context.lineWidth = 3;
+            context.fillStyle = fillColor;
+            context.strokeStyle = strokeColor;
+            context.lineJoin = shape;
+            context.fill();
+            context.stroke();
+        }
+        // )(60, 150, 160, 400, 30, "#fb3", "#fd5", "round");
+	</script>
+</body>
+</html>
