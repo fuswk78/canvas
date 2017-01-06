@@ -18,14 +18,35 @@
             alert("当前浏览器不支持canvas,请更换浏览器后再试！");
         }
 
-        context.fillStyle = "black";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        // context.fillStyle = "black";
+        // context.fillRect(0, 0, canvas.width, canvas.height);
+
+        //线性渐变
+        // var skyStyle = context.createLinearGradient(0, 0, 0, canvas.height);
+        // 		skyStyle.addColorStop(0.0, "black");
+        // 		skyStyle.addColorStop(1.0, "#035");
+        // 		context.fillStyle = skyStyle;
+        // 		context.fillRect(0, 0, canvas.width, canvas.height);
+        // 		
+        // 映像渐变
+        var skyStyle = context.createRadialGradient(
+        					canvas.width/2, canvas.height, 0,
+        					canvas.width/2, canvas.height, canvas.height
+        			);
+        	skyStyle.addColorStop(0.0, "#035");
+        	skyStyle.addColorStop(1.0, "#000");
+        	context.fillStyle = skyStyle;
+        	context.fillRect(0, 0, canvas.width, canvas.height);
+
         // 循环画出五角星
-        for(let i = 0; i < 200; i++) {
-        	var r = Math.random() * 10 + 10,		//10-20的随机数
+        for(let i = 0; i < 150; i++) {
+        	var r = Math.random() * 3 + 3,		//10-20的随机数
         		x = Math.random() * canvas.width,	//0-画布宽度
-        		y = Math.random() * canvas.height,	//0-画布高度
+        		y = Math.random() * canvas.height * .6,	//0-画布高度
         		a = Math.random() * 360;			//0-360度之间
+
+        	
+
         	pentagram(r, r/2, x, y, a, "#fb3", "#fd5", "round");
         }
 		// 大圆小圆，偏移，旋转，颜色，形状
@@ -36,7 +57,7 @@
                     context.lineTo( Math.cos( (18 + i * 72 - rotate) / 180 * Math.PI) * R + x, 
                                     -Math.sin( (18 + i * 72 - rotate) / 180 * Math.PI) * R + y
                     );
-                     context.lineTo( Math.cos( (54 + i * 72 - rotate) / 180 * Math.PI) * r + x, 
+                    context.lineTo( Math.cos( (54 + i * 72 - rotate) / 180 * Math.PI) * r + x, 
                                     -Math.sin( (54 + i * 72 - rotate) / 180 * Math.PI) * r + y
                     );
                 }
@@ -50,6 +71,22 @@
             context.stroke();
         }
         // )(60, 150, 160, 400, 30, "#fb3", "#fd5", "round");
+        // 
+        //
+      
+
+    	var a = [];
+		for (var i = 0; i < 10; i++) {
+		  a[i] = function () {
+		    console.log(i);
+		  };
+		}
+		console.log(a[6]);	
+			// =>function(console.log(i));
+		console.log(i);
+			//10
+		a[6]();	
+			//10
 	</script>
 </body>
 </html>

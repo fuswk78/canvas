@@ -109,7 +109,136 @@
             })(20, 150, 160, 400, 30);
 
             
+//          图形变换
+//          位移：translate(x, y)
+//          旋转：rotate(deg)
+//          缩放：scale(sx, sy)
+//             
+            (function(){
+                 // 第一个
+                context.save()
+                context.fillStyle = "red";
+                //进行200的偏移
+                context.translate(100, 0);
+                context.fillRect(0, 0, 100, 100);
+                context.restore();
+                
+                // 第二个，为了避免translate值的叠加，记得使用context.save();context.restore()
+                context.save()
+                context.fillStyle = "green";
+                //进行200的偏移
+                context.translate(200, 0);
+                context.fillRect(0, 0, 100, 100);
+                context.restore();
+
+
+                // transform
+                context.fillStyle = "#ccc";
+                context.lineWidth = 5;
+                context.save();
+                // 没有进行变换
+                // context.transform(1, 0, 0, 1, 0, 0);
+                // e, f值：偏移
+                // context.transform(1, 0, 0, 1, 50, 100);
+                // 修改a, d 修改缩放,缩放的效果同样会有将边框，位移值同时缩放的缺陷
+                // context.transform(2, 0, 0, 1.5, 0, 0);
+                // 修改b, c，设置倾斜
+                context.transform(1, .2, .2, 1, 0, 0);
+                context.fillRect(100, 700, 200, 200);
+                context.strokeRect(100, 700, 200, 200);
+                context.restore();
+            })();
+           
+
+
+            // 线性渐变
+            (function() {
+                // linearGradient
+                var linearGrad = context.createLinearGradient(500, 800, 500, 1100);
+                    linearGrad.addColorStop(0.0, "#fff");
+                    linearGrad.addColorStop(0.25, "yellow");
+                    linearGrad.addColorStop(0.5, "green");
+                    linearGrad.addColorStop(0.75, "blue");
+                    linearGrad.addColorStop(1.0, "#000");
+                    context.fillStyle = linearGrad;
+                    context.fillRect(500, 800, 300, 300);
+
+                // RadialGradient
+                var radialGrad = context.createRadialGradient(125, 900, 0, 125, 900, 100);
+                    radialGrad.addColorStop(0.0, "#fff");
+                    radialGrad.addColorStop(0.25, "orange");
+                    radialGrad.addColorStop(0.5, "brown");
+                    radialGrad.addColorStop(0.75, "pink");
+                    radialGrad.addColorStop(1.0, "gray");
+                    context.fillStyle = radialGrad;
+                    context.fillRect(25, 800, 200, 200);
+            })();
             
+
+            // createPattern(img/canvas, repeatStyle)
+            (function() {
+                var backgroundImg = new Image();
+                    backgroundImg.src="http://img.zcool.cn/community/03362b3554c74b700000158fc377c9a.jpg";
+                    backgroundImg.onload = function() {
+                        // var pattern = context.createPattern(backgroundImg, "no-repeat");
+                        // var pattern = context.createPattern(backgroundImg, "repeat-x");
+                        // var pattern = context.createPattern(backgroundImg, "repeat-y");
+                        // var pattern = context.createPattern(backgroundImg, "repeat");
+
+                        // context.fillStyle = pattern;
+                        // context.fillRect(30, 800, 1000, 200);
+                        // context.fillRect(0, 0, 1024, 1000);
+                    }
+            })();
+            
+
+            // arc
+            // 画弧边形矩形
+            (function drawRoundRect(context, x, y, width, height, radius) {
+
+                context.save();
+                    context.translate(x, y);
+                    pathRoundRect(context, width, height, radius);
+                    context.strokeStyle = "black";
+                    context.stroke();
+                context.restore();
+
+                function pathRoundRect(context, width, height, radius) {
+                    context.beginPath();
+                        context.arc(
+                            width - radius,
+                            height - radius,
+                            radius, 
+                            0,
+                            Math.PI/2
+                        );
+                        context.lineTo(radius, height);
+                        context.arc(
+                            radius, height - radius, radius, Math.PI/2, Math.PI
+                        );
+                        context.lineTo(0, radius);
+                        context.arc(
+                            radius, radius, radius, Math.PI, Math.PI * 3 / 2
+                        );
+                        context.lineTo(width-radius, 0);
+                        context.arc(
+                            width-radius, radius, radius, Math.PI * 3 / 2, Math.PI * 2
+                        );
+                    context.closePath();
+                }
+
+
+
+                // arcTo();
+                context.beginPath();
+                // context.moveTo(150, 150);
+                context.moveTo(500, 50);
+                context.arcTo(850, 50, 850, 650, 300);
+                context.strokeStyle = "red";
+                context.stroke();
+
+            })(context, 100, 1100, 600, 500, 50);
+
 
         }
 
