@@ -12,7 +12,7 @@ var balls = [];
 var colors = ["#33B5E5", "#0099cc", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"];
 
 
-
+// 就绪
 window.onload = function() {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
